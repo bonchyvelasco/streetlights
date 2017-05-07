@@ -19,9 +19,9 @@ class ReadingsController extends Controller
         $reading = new Reading;
     
         $reading->r = $request->red;
-        $reading->g = $request->red;
-        $reading->b = $request->red;
-        $reading->stoplight_id = $request->red;
+        $reading->g = $request->green;
+        $reading->b = $request->blue;
+        $reading->stoplight_id = $request->id;
         $reading->time = date("Y-m-d H:i:s");
 
         $reading->save();

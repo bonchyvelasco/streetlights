@@ -96,6 +96,9 @@
                         <li>{{ $reading->b }}</li>
                     </ul>
                 @endforeach
+                <div class = "links">
+                    <a href = "{{ url('/readings/add')}}">Add Readings</a>
+                </div>
             </div>
         </div>
     </body>
