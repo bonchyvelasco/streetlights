@@ -11,8 +11,9 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', "PagesController@index");
+
+Route::get('readings/add', 'ReadingsController@addReadingForm');
+Route::post('readings/add', 'ReadingsController@addReading');
 
 /* for deployment */
