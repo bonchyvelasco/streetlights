@@ -12,73 +12,18 @@
 
         <!-- Styles -->
         <link rel="stylesheet" href="{{asset('css/main.css')}}">
-        <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Raleway', sans-serif;
-                font-weight: 100;
-                height: 100vh;
-                margin: 0;
-            }
 
-            .full-height {
-                height: 100vh;
-            }
-
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
-
-            .position-ref {
-                position: relative;
-            }
-
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
-
-            .content {
-                text-align: center;
-            }
-
-            .title {
-                font-size: 84px;
-            }
-
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 12px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
-
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-        </style>
     </head>
     <body>
 
         <!-- initializing map -->
         <div class="container text-center">
-            <h1> <center> Smart Stoplights </center> </h1>
-            <div id="map">
-            </div>  
+            <h1> <center> Smart Stoplights </center> </h1> 
         </div>
 
 
         <script crossorigin="anonymous" integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=" src="https://code.jquery.com/jquery-3.1.0.min.js">
         </script>
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCr5-tH2P_lwRYhBjnSaFyfKBlYI9jxbIE" async defer> </script>
-        <script src="{{asset("js/script.js")}}"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js">
         </script>
 
@@ -129,6 +74,11 @@
                         <li>{{ $reading->g }}</li>
                         <li>{{ $reading->b }}</li>
                     </ul>
+                    <script>
+
+                    //     var myvar = <?php echo json_encode($reading->r); ?>;
+                    //     document.write(myvar);
+                    </script>
                 @endforeach
                 <div class = "links">
                     <a href = "{{ url('/readings/add')}}">Add Readings</a>
