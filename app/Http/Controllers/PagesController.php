@@ -12,6 +12,12 @@ class PagesController extends Controller
     public function index(Request $request) {
         $readings = Reading::all();
         $stoplights = Stoplight::all();
-        return view('welcome', compact('readings'), compact('stoplights'));
+        return view('welcome', compact('readings','stoplights'));
+    }
+    
+    public function searchStoplights()
+    {
+        $stoplights = Stoplight::all();
+        return view('SeeStoplightsViaGoogleMaps',compact('stoplights'));
     }
 }

@@ -8,3 +8,4 @@ class Stoplight extends Model
 {
     public $timestamps = false;
 }
+
