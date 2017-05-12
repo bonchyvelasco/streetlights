@@ -183,4 +183,8 @@ class PagesController extends Controller
 endforeach;
         return view('welcome', compact('readings','stoplights'));
     }
+
+    public function about() {
+        return view('about');
+    }
 }
