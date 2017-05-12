@@ -1,89 +1,87 @@
-<!doctype html>
-<html lang="{{ config('app.locale') }}">
+<!DOCTYPE html>
+<html>
     <head>
-        <meta charset="utf-8">
+
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <title>Smart Stoplight</title>
-
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
-
-        <!-- Styles -->
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCr5-tH2P_lwRYhBjnSaFyfKBlYI9jxbIE"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gmaps.js/0.4.24/gmaps.js"></script>
         <link rel="stylesheet" href="{{asset('css/main.css')}}">
-
     </head>
     <body>
+        <div class="container-fluid">
+          <h1> <center> Smart Stoplights </center></h1>
+          <div class="row">
+            <div class="col-sm-8">
+                <div id="map"></div>
+                <script type="text/javascript">
 
-        <!-- initializing map -->
-        <div class="container text-center">
-            <h1> <center> Smart Stoplights </center> </h1> 
-        </div>
+                    function createIcon () {
+                        var icon = {
+                            url: "http://www.i2clipart.com/cliparts/9/f/8/2/clipart-traffic-lights-9f82.png", // url
+                            scaledSize: new google.maps.Size(35, 35), // scaled size
+                            origin: new google.maps.Point(0,0), // origin
+                            anchor: new google.maps.Point(0, 0) // anchor
+                        };
+                        return icon;
+                    }
 
+                    function createMarkers () {
+                        var icon = createIcon();
+                        var stoplights = <?php print_r(json_encode($stoplights)) ?>;
+                        $.each( stoplights, function( index, value ){
+                            //1 is working, 0 is not working
+                            if (value.status == 0){
+                                var marker = new google.maps.Marker({
+                                position: {lat: value.latitude, lng: value.longitude},
+                                map: map,
+                                title: value.name,
+                                icon: icon,
+                                animation: google.maps.Animation.DROP,
+                                });  
+                                marker.addListener('click', function() {
+                                    alert('This is not working');
+                                });
+                                markers.push(marker);
+                            }
 
-        <script crossorigin="anonymous" integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=" src="https://code.jquery.com/jquery-3.1.0.min.js">
-        </script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js">
-        </script>
+                        });
 
+                    }
 
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @if (Auth::check())
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ url('/login') }}">Login</a>
-                        <a href="{{ url('/register') }}">Register</a>
-                    @endif
-                </div>
-            @endif
+                    function reloadMarkers(){
+                        // Loop through markers and set map to null for each
+                        for (var i=0; i<markers.length; i++) {
+                            markers[i].setMap(null);
+                        }
+                        
+                        // Reset the markers array
+                        markers = [];
+                        
+                        // Call set markers to re-add markers
+                        createMarkers();
+                    }
 
-            <div class="content">
-                <!--<div class="title m-b-md">
-                    Laravel
-                </div>
+                    var markers = [];
+                    var map = new google.maps.Map(document.getElementById('map'), {
+                        center: {lat: 12.6, lng: 122.5},
+                        zoom: 6
+                    }); 
 
-                <div class="links">
-                    <a href="https://laravel.com/docs">Documentation</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
-                </div>-->
-<!--                 @foreach ($stoplights as $s)
-                    var myLatLng = {lat: -25.363, lng: 131.044};
+                    createMarkers();
+                    setInterval(function(){
+                        reloadMarkers();
+                    }, 5000);
 
-                    var marker = new google.maps.Marker({
-                        position: myLatLng,
-                        map: map,
-                        title: 'Hello World!'
-                    });
-                    <ul>
-                        <li>{{ $s->name }}</li>
-                        <li>{{ $s->longitude }}</li>
-                        <li>{{ $s->latitude }}</li>
-                        <li>{{ $s->status }}</li>
-                    </ul>
-                @endforeach -->
-
-                @foreach ($readings as $reading)
-                    <ul>
-                        <li>{{ $reading->r }}</li>
-                        <li>{{ $reading->g }}</li>
-                        <li>{{ $reading->b }}</li>
-                    </ul>
-                    <script>
-
-                    //     var myvar = <?php echo json_encode($reading->r); ?>;
-                    //     document.write(myvar);
-                    </script>
-                @endforeach
-                <div class = "links">
-                    <a href = "{{ url('/readings/add')}}">Add Readings</a>
-                </div>
+                </script>
             </div>
+            <div class="col-sm-4">.col-sm-4</div>
+          </div>
         </div>
     </body>
 </html>

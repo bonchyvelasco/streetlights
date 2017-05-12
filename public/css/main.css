@@ -53,3 +53,8 @@ html, body {
     	width: 100%;
     	margin: 0 auto;
     }
+
+
+.box {
+    margin: 10 px;
+}
