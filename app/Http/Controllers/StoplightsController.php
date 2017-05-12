@@ -19,7 +19,10 @@ class StoplightsController extends Controller
 
         DB::table('stoplights')
             ->where('stoplight_id', $request->id)
-            ->update(array('status' => 1));
+            ->update(array('status' => 1, 'error' => 'Not Defective'));
+        DB::table('readings')
+            ->where('stoplight_id', $request->id)
+            ->delete();
         return redirect('/');
     }
 }
