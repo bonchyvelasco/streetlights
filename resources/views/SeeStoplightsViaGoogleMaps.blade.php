@@ -17,7 +17,6 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/gmaps.js/0.4.24/gmaps.js"></script>
   <link rel="stylesheet" href="{{asset('css/main.css')}}">
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 </head>
 <body>
@@ -37,33 +36,39 @@
       };
       return icon;
     }
-    var icon = createIcon();
-    var stoplights = <?php print_r(json_encode($stoplights)) ?>;
+    function createMarkers (map) {
+        var icon = createIcon();
+        var stoplights = <?php print_r(json_encode($stoplights)) ?>;
+        $.each( stoplights, function( index, value ){
+          //1 is working, 0 is not working
+          if (value.status == 0){
+            var marker = new google.maps.Marker({
+                position: {lat: value.latitude, lng: value.longitude},
+                map: map,
+                title: value.name,
+                icon: icon,
+            });  
+            marker.addListener('click', function() {
+                alert('This is not working');
+            });
 
-    var map = new GMaps({
-      el: '#map',
-      lat: 21.170240,
-      lng: 72.831061,
-      center: {lat: 12.6, lng: 122.5},
-      zoom:6
-    });
-
-    $.each( stoplights, function( index, value ){
-      //0 is working, 1 is not working
-      if (value.status == 0){
-        map.addMarker({
-          lat: value.latitude,
-          lng: value.longitude,
-          title: value.name,
-          icon: icon,
-          click: function(e) {
-            alert('This is '+value.status+', gujarat from India.');
           }
-        });
-      }
 
 
-   });
+       });
+    }
+    
+
+    var map = new google.maps.Map(document.getElementById('map'), {
+      center: {lat: 12.6, lng: 122.5},
+      zoom: 6
+    }); 
+
+    setInterval(function(){
+      createMarkers(map);
+    }, 5000);
+
+
 
   </script>
 
