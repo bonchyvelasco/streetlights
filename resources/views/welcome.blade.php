@@ -79,7 +79,6 @@
     </script>
 </div>
 <div class="col-sm-4">
-    <
     <div class="row"> <h3 id = "header">Click a marker on the map to show details.</h3></div>
     <div class="row mx-auto my-auto"><h4 id = "stoplight_name" ></h4></div>
     <div class="row"><h4 id = "stoplight_latitude"></h4></div>
