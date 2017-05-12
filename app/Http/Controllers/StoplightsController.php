@@ -8,7 +8,10 @@ use App\Http\Requests;
 
 class StoplightsController extends Controller
 {
+    public function index(Request $request) {
+        $stoplights = Stoplight::all();
 
-
+        return view('stoplights.index', compact('stoplights'));
+    }
 }
 

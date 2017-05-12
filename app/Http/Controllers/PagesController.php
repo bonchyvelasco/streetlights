@@ -20,4 +20,8 @@ class PagesController extends Controller
         $stoplights = Stoplight::all();
         return view('SeeStoplightsViaGoogleMaps',compact('stoplights'));
     }
+
+    public function about() {
+        return view('about');
+    }
 }

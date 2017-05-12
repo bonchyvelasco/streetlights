@@ -49,12 +49,8 @@ html, body {
     margin-bottom: 30px;
 }
 #map{
-    	height: 800px;
-    	width: 100%;
-    	margin: 0 auto;
-    }
-
-
-.box {
-    margin: 10 px;
+    height: 75vh;
+    min-height: 400px;
+    width: 100%;
+    margin: 0 auto;
 }
