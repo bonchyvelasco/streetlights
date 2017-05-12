@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Stoplight;
 use App\Http\Requests;
@@ -12,6 +13,14 @@ class StoplightsController extends Controller
         $stoplights = Stoplight::all();
 
         return view('stoplights.index', compact('stoplights'));
+    }
+
+    public function reset(Request $request) {
+
+        DB::table('stoplights')
+            ->where('stoplight_id', $request->id)
+            ->update(array('status' => 1));
+        return redirect('/');
     }
 }
 

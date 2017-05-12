@@ -44,6 +44,10 @@
                         document.getElementById("stoplight_latitude").innerHTML="Latitude: "+value.latitude;
                         document.getElementById("stoplight_longitude").innerHTML="Longitude: "+value.longitude;
                         document.getElementById("stoplight_status").innerHTML="Status: "+value.error;
+                        $("#stoplight_id").attr({
+                            "value" : value.stoplight_id
+                          });
+                        $("#form").show();
                     });
                     markers.push(marker);
                 }
@@ -84,5 +88,12 @@
     <div class="row"><h4 id = "stoplight_latitude"></h4></div>
     <div class="row"><h4 id = "stoplight_longitude" ></h4></div>
     <div class="row"><h4 id = "stoplight_status"></h4></div>
+    <form method = "POST" action = "{{ url('/stoplights/reset') }}" id = "form" style = "display:none">
+        {{ csrf_field() }}
+          <div class="form-group">
+            <input type="hidden" class="form-control" name = "id" id="stoplight_id" value = "">
+          </div>
+      <button type="submit" class="btn btn-default">Reset</button>
+    </form>
 </div>
 @endsection

@@ -17,7 +17,8 @@ Route::get('/about', "PagesController@about");
 Route::get('/stoplights', "StoplightsController@index");
 
 Route::get('/readings', "ReadingsController@index");
-Route::get('readings/add', 'ReadingsController@addReadingForm');
-Route::post('readings/add', 'ReadingsController@addReading');
+Route::get('/readings/add', 'ReadingsController@addReadingForm');
+// Route::post('readings/add', 'ReadingsController@addReading');
+Route::post('/stoplights/reset', 'StoplightsController@reset');
 Route::get('SeeStoplightsViaGoogleMaps', 'PagesController@searchStoplights');
 /* for deployment */
