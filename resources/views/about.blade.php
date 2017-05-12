@@ -92,13 +92,14 @@
         <figure class = "text-center">
             <img src = "{{ asset('img/Asset 6.png') }}" alt = "Us" style = "width: 90%; display: block; margin: 0 auto;"/>
         </figure>
+        <br/><br/>
+        <br/><br/>
         <h5>Wijangco, Iya</h5>
         <h5>Maraon, Renee</h5>
         <h5>Bilaw, Nicole</h5>
         <h5>Cornelio, Lea</h5>
         <h5>Velasco, Bonchy</h5>
         <h5><i>from left to right</i></h5>
-        <br/><br/>
         <br/><br/>
     </div>
   </div>
