@@ -39,6 +39,7 @@
                     });  
                     marker.addListener('click', function() {
                         // +alert('This is not working');
+                        document.getElementById("header").innerHTML="Details";
                         document.getElementById("stoplight_name").innerHTML="Name of Place: "+value.name;
                         document.getElementById("stoplight_latitude").innerHTML="Latitude: "+value.latitude;
                         document.getElementById("stoplight_longitude").innerHTML="Longitude: "+value.longitude;
@@ -78,10 +79,11 @@
     </script>
 </div>
 <div class="col-sm-4">
-    <div class="row"> <h3>Click a marker on the map to show details.</h3>
-    <div id = "stoplight_name" class="row mx-auto my-auto"> </div>
-    <div id = "stoplight_latitude" class="row"> </div>
-    <div id = "stoplight_longitude" class="row"> </div>
-    <div id = "stoplight_status" class="row"> </div>
+    <
+    <div class="row"> <h3 id = "header">Click a marker on the map to show details.</h3></div>
+    <div class="row mx-auto my-auto"><h4 id = "stoplight_name" ></h4></div>
+    <div class="row"><h4 id = "stoplight_latitude"></h4></div>
+    <div class="row"><h4 id = "stoplight_longitude" ></h4></div>
+    <div class="row"><h4 id = "stoplight_status"></h4></div>
 </div>
 @endsection
