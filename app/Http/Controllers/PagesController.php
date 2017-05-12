@@ -64,6 +64,12 @@ public function compare($state, $test){
                 if ($previousValue_y != null) $prev_y_state = array($previousValue_y->r, $previousValue_y->y, $previousValue_y->g);
                 $curr_state = array($reading->r, $reading->y, $reading->g);
                 
+                //STAGE 0 - TOO LONG
+                if ($previousValue == null && strtotime($reading->time) - (strtotime(date("Y-m-d H:i:s"))  > 200)) {
+                    $duration = 3;
+                }
+
+
                 //STAGE 1 - PATTERN
                 if ($previousValue!= null && $previousValue_y!= null){
 
@@ -88,19 +94,22 @@ public function compare($state, $test){
 
                 //EVALUATE
                 if ($previousValue== null){
-                    if ($pattern == 1) {
+                    if ($duration == 3) {
+                        DB::table('stoplights')
+                        ->where('stoplight_id', $reading->stoplight_id)
+                        ->update(array('status' => 0, 'error' => "Stuck at one color"));
+                        break;
+                    } else if ($pattern == 1) {
                         DB::table('stoplights')
                         ->where('stoplight_id', $reading->stoplight_id)
                         ->update(array('status' => 1, 'error' => "Not defective"));
-                    }
-                    else if ($this->compare($curr_state, array(0, 0, 0))) {
+                    } else if ($this->compare($curr_state, array(0, 0, 0))) {
                         // return $pattern;
                         DB::table('stoplights')
                         ->where('stoplight_id', $reading->stoplight_id)
                         ->update(array('status' => 0, 'error' => "Defective: no color is on"));
                         break;
-                    }
-                    else{
+                    } else {
                         DB::table('stoplights')
                         ->where('stoplight_id', $reading->stoplight_id)
                         ->update(array('status' => 0, 'error' => "Defective: more than one color is on"));
