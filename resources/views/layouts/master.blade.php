@@ -55,8 +55,8 @@
                     <li><a href="{{ url('/about#') }}">Page 1-3</a></li>
                 </ul>
                 </li>
-                <li><a href="#">Readings</a></li>
-                <li><a href="#">Stoplights</a></li>
+                <li><a href="{{ url('/readings') }}">Readings</a></li>
+                <li><a href="{{ url('/stoplights') }}">Stoplights</a></li>
             </ul>
             </div>
         </div>

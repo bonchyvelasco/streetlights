@@ -7,6 +7,13 @@ use App\Reading;
 
 class ReadingsController extends Controller
 {
+
+    public function index(Request $request) {
+        $readings = Reading::all();
+
+        return view('readings.index', compact('readings'));
+    }
+
     public function addReading(Request $request) {
 
         $this->validate($request, [
@@ -32,6 +39,6 @@ class ReadingsController extends Controller
     }
 
     public function addReadingForm() {
-        return view('reading.add');
+        return view('readings.add');
     }
 }
