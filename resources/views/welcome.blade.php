@@ -38,7 +38,11 @@
                     animation: google.maps.Animation.DROP,
                     });  
                     marker.addListener('click', function() {
-                        alert('This is not working');
+                        // +alert('This is not working');
+                        document.getElementById("stoplight_name").innerHTML="Name of Place: "+value.name;
+                        document.getElementById("stoplight_latitude").innerHTML="Latitude: "+value.latitude;
+                        document.getElementById("stoplight_longitude").innerHTML="Longitude: "+value.longitude;
+                        document.getElementById("stoplight_status").innerHTML="Status: "+value.error;
                     });
                     markers.push(marker);
                 }
@@ -74,6 +78,10 @@
     </script>
 </div>
 <div class="col-sm-4">
-    <h3>Click a marker on the map to show details.</h3>
+    <div class="row"> <h3>Click a marker on the map to show details.</h3>
+    <div id = "stoplight_name" class="row mx-auto my-auto"> </div>
+    <div id = "stoplight_latitude" class="row"> </div>
+    <div id = "stoplight_longitude" class="row"> </div>
+    <div id = "stoplight_status" class="row"> </div>
 </div>
 @endsection
