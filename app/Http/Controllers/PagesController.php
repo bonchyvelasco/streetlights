@@ -72,7 +72,8 @@ public function compare($state, $test){
     }
 
     public function index(Request $request) {
-        $readings = Reading::all();
+        $readings = Reading::all()
+                    ->orderBy('time', 'desc');
         $stoplights = Stoplight::all();
 
         foreach($stoplights as $stoplight):
