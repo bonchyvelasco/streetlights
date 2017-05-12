@@ -11,67 +11,66 @@ header("refresh: 10;");
 
 class PagesController extends Controller
 {
-	public function compare($state, $test){
-                    $counter = 0;
+public function compare($state, $test){
+	    $counter = 0;
 
-                    for($i = 0; $i < 3; $i++){
-                        if ($state[$i] == $test[$i]) $counter++;
-                    }
+	    for($i = 0; $i < 3; $i++){
+	        if ($state[$i] == $test[$i]) $counter++;
+	    }
 
-                    if ($counter == 3) return true;
-                    else return false;
-                }
+	    if ($counter == 3) return true;
+	    else return false;
+	}
 
-                public function check_pattern($prev_state, $prev_y_state, $curr_state){
+    public function check_pattern($prev_state, $prev_y_state, $curr_state){
 
-                    if ($prev_state != null && $prev_y_state != null){
-                        if ($this->compare($prev_state, array(1, 0, 0)) == true && $this->compare($curr_state, array(0, 1, 0)) == true) return true;
-                        if ($this->compare($prev_state, array(0, 0, 1)) == true && $this->compare($curr_state, array(0, 1, 0)) == true) return true;
-                        if ($this->compare($prev_state, array(0, 1, 0)) == true && $this->compare($prev_y_state, array(0, 0, 1)) == true && $this->compare($curr_state, array(1, 0, 0)) == true) return true;
-                        if ($this->compare($prev_state, array(0, 1, 0)) && $this->compare($prev_y_state, array(1, 0, 0)) && $this->compare($curr_state, array(0, 0, 1))) return true;
-                    }
-                    else if ($prev_state != null){
-                        if ($this->compare($prev_state, array(1, 0, 0)) == true && $this->compare($curr_state, array(0, 1, 0)) == true) return true;
-                        if ($this->compare($prev_state, array(0, 0, 1)) == true && $this->compare($curr_state, array(0, 1, 0)) == true) return true;
-                        if ($this->compare($prev_state, array(0, 1, 0)) == true && $this->compare($curr_state, array(1, 0, 0)) == true) return true;
-                        if ($this->compare($prev_state, array(0, 1, 0)) == true && $this->compare($curr_state, array(0, 0, 1)) == true) return true;
-                    }
-                    else{
-                        if ($this->compare($curr_state, array(1, 0, 0)) == true) return true;
-                        if ($this->compare($curr_state, array(0, 1, 0)) == true) return true;
-                        if ($this->compare($curr_state, array(0, 0, 1)) == true) return true;
-                    }
+        if ($prev_state != null && $prev_y_state != null){
+            if ($this->compare($prev_state, array(1, 0, 0)) == true && $this->compare($curr_state, array(0, 1, 0)) == true) return true;
+            if ($this->compare($prev_state, array(0, 0, 1)) == true && $this->compare($curr_state, array(0, 1, 0)) == true) return true;
+            if ($this->compare($prev_state, array(0, 1, 0)) == true && $this->compare($prev_y_state, array(0, 0, 1)) == true && $this->compare($curr_state, array(1, 0, 0)) == true) return true;
+            if ($this->compare($prev_state, array(0, 1, 0)) && $this->compare($prev_y_state, array(1, 0, 0)) && $this->compare($curr_state, array(0, 0, 1))) return true;
+        }
+        else if ($prev_state != null){
+            if ($this->compare($prev_state, array(1, 0, 0)) == true && $this->compare($curr_state, array(0, 1, 0)) == true) return true;
+            if ($this->compare($prev_state, array(0, 0, 1)) == true && $this->compare($curr_state, array(0, 1, 0)) == true) return true;
+            if ($this->compare($prev_state, array(0, 1, 0)) == true && $this->compare($curr_state, array(1, 0, 0)) == true) return true;
+            if ($this->compare($prev_state, array(0, 1, 0)) == true && $this->compare($curr_state, array(0, 0, 1)) == true) return true;
+        }
+        else{
+            if ($this->compare($curr_state, array(1, 0, 0)) == true) return true;
+            if ($this->compare($curr_state, array(0, 1, 0)) == true) return true;
+            if ($this->compare($curr_state, array(0, 0, 1)) == true) return true;
+        }
+    
+        return false;
+    }
+
+    public function sec($timestamp){
+        $i = 0;
+        $hours = "";
+        $minutes = "";
+        $seconds = "";
+        $time;
+
+        while($timestamp[$i] != " ") $i++;
+
+        for ($j = 0; $j < 3; $j++){
+            while($timestamp[$i] != ":"){
+                if ($j == 0) $hours += $timestamp[$i];
+                else if ($j == 1) $minutes += $timestamp[$i];
+                else $seconds += $timestamp[$i];
                 
-                    return false;
-                }
+                if ($j < 2) $i++;
+                else break;
+            }
 
-                public function sec($timestamp){
-                    $i = 0;
-                    $hours = "";
-                    $minutes = "";
-                    $seconds = "";
-                    $time;
+            $i++;
+        }
 
-                    while($timestamp[$i] != " ") $i++;
+        $time = (intval($hours) * 3600) + (intval($minutes) * 60) + intval($seconds);
+        return $time;        
+    }
 
-                    for ($j = 0; $j < 3; $j++){
-                        while($timestamp[$i] != ":"){
-                            if ($j == 0) $hours += $timestamp[$i];
-                            else if ($j == 1) $minutes += $timestamp[$i];
-                            else $seconds += $timestamp[$i];
-                            
-                            if ($j < 2) $i++;
-                            else break;
-                        }
-
-                        $i++;
-                    }
-
-                    $time = (intval($hours) * 3600) + (intval($minutes) * 60) + intval($seconds);
-                    return $time;        
-                }
-
-                //MAIN
     public function index(Request $request) {
         $readings = Reading::all();
         $stoplights = Stoplight::all();
@@ -103,7 +102,7 @@ class PagesController extends Controller
 
                 //STAGE 2 - TIME
                 if ($previousValue!= null){
-                    if ($this->sec($reading->time) - $this->sec($previousValue->time) >= 1 && $this->sec($previousValue_y->time) - $this->sec($prev_reading[4]) <= 500){
+                    if ($this->sec($reading->time) - $this->sec($previousValue->time) >= 1 && $this->sec($reading->time) - $this->sec($previousValue->time) <= 120){
                         $duration = 1;
                     }
                     else if ($this->sec($reading->time) - $this->sec($previousValue->time) < 1) $duration = 2;
@@ -113,75 +112,66 @@ class PagesController extends Controller
                 //EVALUATE
                 if ($previousValue== null){
                     if ($pattern == 1) {
-                        //echo "Not defective";
+                        DB::table('stoplights')
+			            ->where('stoplight_id', $reading->stoplight_id)
+			            ->update(array('status' => 1, 'error' => "Not defective"));
 
-                        DB::table('readings')
-			            ->where('reading_id', $reading->reading_id)
-			            ->update(['status' => 1]);
                     }
                     else if ($this->compare($curr_state, array(0, 0, 0))) {
-                        //echo "Defective: no color is on";
-
-                        DB::table('readings')
-			            ->where('reading_id', $reading->reading_id)
-			            ->update(['status' => 0]);
+                        DB::table('stoplights')
+			            ->where('stoplight_id', $reading->stoplight_id)
+			            ->update(array('status' => 0, 'error' => "Defective: no color is on"));
                     }
                     else{
-                        //echo "Defective: more than one color is on"; 
-
-                        DB::table('readings')
-			            ->where('reading_id', $reading->reading_id)
-			            ->update(['status' => 0]);
+                        DB::table('stoplights')
+			            ->where('stoplight_id', $reading->stoplight_id)
+			            ->update(array('status' => 0, 'error' => "Defective: more than one color is on"));
                     }
                 }
                 else{
                     if ($pattern == 1 && $duration == 1){
-                        //echo "Not defective";
-
-                        DB::table('readings')
-			            ->where('reading_id', 1)
-			            ->update(['status' => 1]);
+                        DB::table('stoplights')
+			            ->where('stoplight_id', $reading->stoplight_id)
+			            ->update(array('status' => 1, 'error' => "Not defective"));
                     }
                     else if ($pattern == 0 && $duration == 1){
-                        //echo "Defective: sequence is incorrect";
-
-                        DB::table('readings')
-			            ->where('reading_id', $reading->reading_id)
-			            ->update(['status' => 0]);
+                        DB::table('stoplights')
+			            ->where('stoplight_id', $reading->stoplight_id)
+			            ->update(array('status' => 0, 'error' => "Defective: sequence is incorrect"));
                     }
                     else if ($pattern == 1){
                         if ($duration == 2){
-                            echo "Defective: duration is too short";
+                            DB::table('stoplights')
+				            ->where('stoplight_id', $reading->stoplight_id)
+				            ->update(array('status' => 0, 'error' => "Defective: duration is too short"));
                         }
                         else{
-                            echo "Defective: duration is too long";
+                           	DB::table('stoplights')
+				            ->where('stoplight_id', $reading->stoplight_id)
+				            ->update(array('status' => 0, 'error' => "Defective: duration is too long"));
                         }
-
-                        DB::table('readings')
-			            ->where('reading_id', $reading->reading_id)
-			            ->update(['status' => 0]);
                     }
                     else if ($pattern == 0){
                         if ($duration == 2){
-                            echo "Defective: sequence is incorrect and duration is too short.";
+                            DB::table('stoplights')
+				            ->where('stoplight_id', $reading->stoplight_id)
+				            ->update(array('status' => 0, 'error' => "Defective: sequence is incorrect and duration is too short."));
                         }
                         else{
-                            echo "Defective: sequence is incorrect and duration is too long.";
+                            DB::table('stoplights')
+				            ->where('stoplight_id', $reading->stoplight_id)
+				            ->update(array('status' => 0, 'error' => "Defective: sequence is incorrect and duration is too long."));
                         }
-
-                        DB::table('readings')
-			            ->where('reading_id', $reading->reading_id)
-			            ->update(['status' => 0]);
                     }
                 }
                 
                 $previousValue_y = $previousValue;
                 $previousValue = $reading;
            
-        endif;
-    endforeach;
-endforeach;
-        return view('welcome', compact('readings','stoplights'));
+		        endif;
+		    endforeach;
+		endforeach;
+       	return view('welcome', compact('readings','stoplights'));
     }
 
     public function about() {
