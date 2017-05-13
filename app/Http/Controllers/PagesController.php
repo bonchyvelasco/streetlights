@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use App\Reading;
 use App\User;
 use App\Stoplight;
-header("refresh: 10;");
 
 class PagesController extends Controller
 {
@@ -47,6 +46,7 @@ public function compare($state, $test){
     }
 
     public function index(Request $request) {
+        header("refresh: 10;");
         $readings = Reading::
                     orderBy('time', 'desc')->get();
         $stoplights = Stoplight::all();
@@ -63,9 +63,12 @@ public function compare($state, $test){
                 if ($previousValue != null) $prev_state = array($previousValue->r, $previousValue->y, $previousValue->g);
                 if ($previousValue_y != null) $prev_y_state = array($previousValue_y->r, $previousValue_y->y, $previousValue_y->g);
                 $curr_state = array($reading->r, $reading->y, $reading->g);
-                
+            
                 //STAGE 0 - TOO LONG
-                if ($previousValue == null && strtotime($reading->time) - (strtotime(date("Y-m-d H:i:s"))  > 200)) {
+                date_default_timezone_set('Asia/Manila');
+
+                // return (strtotime(date("Y-m-d H:i:s")))- strtotime($reading->time) ;
+                if ($previousValue == null &&  abs(strtotime(date("Y-m-d H:i:s")) - strtotime($reading->time))  > 180) {
                     $duration = 3;
                 }
 
